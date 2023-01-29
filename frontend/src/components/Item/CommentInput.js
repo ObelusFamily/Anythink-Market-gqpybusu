@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import agent from "../../agent";
-import { connect } from "react-redux";
 import { ADD_COMMENT } from "../../constants/actionTypes";
+import { useDispatch } from 'react-redux'
 
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (payload) => dispatch({ type: ADD_COMMENT, payload }),
-});
-
-function CommentInput({currentUser, slug, onSubmit}) {
+export default function CommentInput({
+  currentUser, 
+  slug,
+}) {
   const [body, setBody] = useState("")
+
+  const dispatch = useDispatch()
 
   async function createComment(e) {
     e.preventDefault()
@@ -18,7 +18,7 @@ function CommentInput({currentUser, slug, onSubmit}) {
       body
     });
 
-    onSubmit(payload)
+    dispatch({ type: ADD_COMMENT, payload })
     setBody("")
   }
 
@@ -46,5 +46,3 @@ function CommentInput({currentUser, slug, onSubmit}) {
       </form>
   )
 }
-
-export default connect(() => ({}), mapDispatchToProps)(CommentInput);
